@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg3m5qnyxjev4"]
+
+[ext_resource type="Material" uid="uid://m80rmki4fbox" path="res://sky/examples/night_sky.tres" id="1_punbq"]
+
+[sub_resource type="Sky" id="Sky_ieg05"]
+sky_material = ExtResource("1_punbq")
+
+[sub_resource type="Environment" id="Environment_1eoep"]
+background_mode = 2
+sky = SubResource("Sky_ieg05")
+ambient_light_source = 2
+ambient_light_color = Color(0.45098, 0.333333, 0.309804, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.2
+
+[node name="NightSky" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1eoep")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.984195, 0.113116, -0.136249, 0, 0.7694, 0.638768, 0.177085, -0.628672, 0.75724, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.615661, 0.597418, 0.51386, 0, 0.652098, -0.758134, -0.788011, -0.466754, -0.401472, 0, 0, 0)

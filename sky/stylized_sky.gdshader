@@ -11,7 +11,7 @@ uniform int clouds_samples : hint_range(8, 32, 8) = 16;
 uniform int shadow_sample : hint_range(1, 4, 1) = 4;
 
 uniform float clouds_density : hint_range(0.0, 1.0, 0.1) = 0.5;
-uniform float clouds_scale : hint_range(0.1, 1.0, 0.1) = 0.5;
+uniform float clouds_scale : hint_range(0.5, 1.5, 0.1) = 1.0;
 uniform float clouds_smoothness : hint_range(0.01, 0.1, 0.01) = 0.035;
 uniform vec3 clouds_light_color : source_color;
 uniform float clouds_shadow_intensity : hint_range(0.1, 10.0, 0.1) = 1.0;
@@ -102,7 +102,7 @@ vec2 CloudRayMarch(vec3 direction, vec3 sun_direction){
 	vec3 sample_point = vec3(0.0, 0.0, 2.0);
 	
 	
-	int loop_offset = clouds_samples * 4;
+	int loop_offset = clouds_samples * 3;
 	
 	for(int i = loop_offset; i < clouds_samples + loop_offset; i++) {
 		float progress = float(i) / float(clouds_samples);

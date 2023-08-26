@@ -5,7 +5,7 @@ Stylized Sky</h1>
 
 An open-source shader for creating stylized skies. Compatible with Godot game engine version 4.
 
-## Preview
+## Preview
 
 <table>
   <tr align="center">
@@ -18,7 +18,7 @@ An open-source shader for creating stylized skies. Compatible with Godot game en
   </tr>
 </table>
 
-## Features
+## Features
 
 | Feature  | Description |
 | ------------- | ------------- |
@@ -27,14 +27,14 @@ An open-source shader for creating stylized skies. Compatible with Godot game en
 | Clouds  | Displays scrolling animated volumetric clouds.  |
 | Astro  | Position an image based on the primary Directional Light 3D direction.  |
 
-## Optimization
+## Optimization
 
 The sky shader can be optimized by applying the following changes.
 
 - **Static sky** Enhance performance by making the sky static by removing the `TIME` variable.
 - **Sample Reduction** Adjust cloud sampling to fine-tune the balance between quality and performance.
 
-## Credits
+## Credits
 
 [Voronoi method by Inigo Quilez](https://www.shadertoy.com/view/ldl3Dl)
 [Volumetric Rendering by Alan Zucconi](https://www.alanzucconi.com/)

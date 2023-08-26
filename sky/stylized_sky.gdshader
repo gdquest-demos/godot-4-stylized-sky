@@ -125,14 +125,14 @@ vec2 CloudRayMarch(vec3 direction, vec3 sun_direction){
 void sky() {
 	
 	float horizon_mask = abs(EYEDIR.y);
-	float bottom_mask = step(SKY_COORDS.y, 0.5);
+	float bottom_mask = smoothstep(0.55, 0.45, SKY_COORDS.y);
 	
 	vec3 dir = directionToMatrix(LIGHT0_DIRECTION) * EYEDIR;
 	vec2 astro_uv = ((dir.xy / dir.z) * astro_scale) + vec2(0.5);
 	float astro_mask = ceil(
 		clamp(astro_uv.x * (1.0 - astro_uv.x), 0.0, 1.0) *
 		clamp(astro_uv.y * (1.0 - astro_uv.y), 0.0, 1.0)
-		);
+		) * ceil(dir.z);
 	vec4 astro_color = texture(astro_sampler, astro_uv);
 	
 	// Sky color

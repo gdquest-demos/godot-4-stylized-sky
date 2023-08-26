@@ -3,7 +3,7 @@
 [ext_resource type="Shader" path="res://sky/stylized_sky.gdshader" id="1_i5n5i"]
 
 [sub_resource type="Gradient" id="Gradient_hjww8"]
-offsets = PackedFloat32Array(0.58, 0.6)
+offsets = PackedFloat32Array(0.48, 0.6)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xucge"]
@@ -47,7 +47,8 @@ shader_parameter/cloud_curves = SubResource("CurveTexture_pcewo")
 shader_parameter/top_color = Color(0.34902, 0.588235, 1, 1)
 shader_parameter/bottom_color = Color(0, 0.329412, 0.968627, 1)
 shader_parameter/sun_scatter = Color(0.298039, 0.298039, 0.298039, 1)
-shader_parameter/astro_tint = Color(1, 1, 1, 1)
+shader_parameter/astro_tint = Color(0.905882, 0.788235, 0.627451, 1)
 shader_parameter/astro_scale = 9.0
+shader_parameter/astro_intensity = 3.0
 shader_parameter/astro_sampler = SubResource("GradientTexture2D_xucge")
 shader_parameter/stars_intensity = 0.0

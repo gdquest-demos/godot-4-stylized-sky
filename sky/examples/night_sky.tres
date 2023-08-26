@@ -52,5 +52,6 @@ shader_parameter/bottom_color = Color(0.027451, 0.101961, 0.25098, 1)
 shader_parameter/sun_scatter = Color(0.12549, 0.0862745, 0.372549, 1)
 shader_parameter/astro_tint = Color(1, 1, 1, 1)
 shader_parameter/astro_scale = 6.0
+shader_parameter/astro_intensity = 1.6
 shader_parameter/astro_sampler = SubResource("GradientTexture2D_vg6u4")
 shader_parameter/stars_intensity = 1.0

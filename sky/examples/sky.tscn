@@ -15,7 +15,7 @@ tonemap_mode = 2
 glow_enabled = true
 glow_bloom = 0.2
 
-[node name="NightSky" type="Node3D"]
+[node name="Sky" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1eoep")

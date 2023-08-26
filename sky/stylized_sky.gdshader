@@ -27,6 +27,7 @@ group_uniforms astro;
 uniform vec3 astro_tint : source_color;
 uniform sampler2D astro_sampler : repeat_disable, filter_linear_mipmap;
 uniform float astro_scale : hint_range(0.1, 10.0, 0.1) = 1.0;
+uniform float astro_intensity : hint_range(1.0, 3.0, 0.1) = 1.0;
 
 group_uniforms stars;
 
@@ -142,7 +143,7 @@ void sky() {
 	
 	// Add astro
 	
-	sky_color = mix(sky_color, astro_color.rgb, astro_color.a * astro_mask * bottom_mask);
+	sky_color = mix(sky_color, astro_color.rgb * astro_intensity * astro_tint, astro_color.a * astro_mask * bottom_mask);
 	
 	// Stars
 	

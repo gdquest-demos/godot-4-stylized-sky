@@ -94,7 +94,6 @@ float cloud_density(vec3 p, float progress){
 
 vec2 CloudRayMarch(vec3 direction, vec3 sun_direction){
 	float l = length(direction.xy) / 10.0;
-	if (l > 1.0) return vec2(0.0);
 	
 	float density = 0.0;
 	float light = 0.0;

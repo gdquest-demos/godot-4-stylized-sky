@@ -37,5 +37,7 @@ The sky shader can be optimized by applying the following changes.
 ## Credits
 
 [Voronoi method by Inigo Quilez](https://www.shadertoy.com/view/ldl3Dl)
+
 [Volumetric Rendering by Alan Zucconi](https://www.alanzucconi.com/)
+
 [Direction to rotation matrix by Martijn Pieters](https://stackoverflow.com/questions/18558910/direction-vector-to-rotation-matrix)

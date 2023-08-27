@@ -26,6 +26,7 @@ An open-source shader for creating stylized skies. Compatible with Godot game en
 | Starfield  | Add twinkling starfield in the background, ideal for nocturnal scenes.  |
 | Clouds  | Displays scrolling animated volumetric clouds.  |
 | Astro  | Position an image based on the primary Directional Light 3D direction.  |
+| Shooting stars | Add shooting stars falling from the top of the skybox. |
 
 ## Optimization
 

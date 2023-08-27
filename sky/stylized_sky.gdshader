@@ -33,6 +33,12 @@ group_uniforms stars;
 
 uniform float stars_intensity : hint_range(0.0, 5.0, 0.1) = 0.0;
 
+group_uniforms shooting_stars;
+
+uniform float shooting_stars_intensity : hint_range(0.0, 4.0, 0.1) = 0.0;
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
 // Voronoi method credit:
 // The MIT License
 // Copyright © 2013 Inigo Quilez
@@ -121,6 +127,39 @@ vec2 CloudRayMarch(vec3 direction, vec3 sun_direction){
 	return vec2(clamp(density * (1.0-l), 0.0, 1.0), light / float(shadow_sample * clouds_samples));
 }
 
+vec3 randomDirection(float seed){
+	float phi = rand(seed) * PI;
+	float costheta = rand(seed + 100.0) * 2.0 - 1.0;
+	float theta = acos(costheta);
+	return vec3( sin(theta) * cos(phi), (theta) * sin(phi), cos(theta) );
+}
+
+float getShootingStar(vec3 eyedir){
+	float shooting_star = 0.0;
+	for(int i = 0; i < 4; i++){
+		float base_rand = rand(float(i));
+		float time = TIME + base_rand * 2.0;
+		float duration = 1.0 + base_rand * 0.25;
+		float seed = floor(time / duration) * duration + base_rand;
+		float progress = mod(time, duration) / duration;
+		float a = rand(seed + 100.0) * 0.8;
+		mat3 angle = mat3(vec3(cos(a), -sin(a), 0.0), vec3(sin(a), cos(a), 0.0), vec3(0.0, 0.0, 1.0));
+		vec3 shooting_dir = directionToMatrix(randomDirection(seed)) * angle * eyedir;
+		vec2 shooting_uv = ((shooting_dir.xy + vec2(0.0, progress * 0.4)) * vec2(80.0, 1.0) * 2.0) + vec2(0.5);
+
+		float shooting_mask = ceil(
+			clamp(shooting_uv.x * (1.0 - shooting_uv.x), 0.0, 1.0) *
+			clamp(shooting_uv.y * (1.0 - shooting_uv.y), 0.0, 1.0)
+			) * ceil(shooting_dir.z);
+	
+		float shape = shooting_mask * sin(shooting_uv.x * PI) * sin(shooting_uv.y * PI);
+		float tail = shooting_mask * (1.0 - shooting_uv.y);
+		float tail_progress = clamp((1.0 - shooting_uv.y) - progress, 0.0, 1.0);
+		shooting_star = clamp(shooting_star + (step(0.1, shape) * tail_progress * progress * 4.0), 0.0, 1.0);
+	}
+	return clamp(shooting_star, 0.0, 1.0);
+}
+
 void sky() {
 	
 	float horizon_mask = abs(EYEDIR.y);
@@ -140,16 +179,22 @@ void sky() {
 	vec3 sunset_color = sun_scatter * (1.0 - horizon_mask);
 	vec3 sky_color = clamp(sky_gradient + sunset_color, 0.0, 1.0);
 	
-	// Add astro
-	
-	sky_color = mix(sky_color, astro_color.rgb * astro_intensity * astro_tint, astro_color.a * astro_mask * bottom_mask);
-	
 	// Stars
 	
 	if(stars_intensity > 0.0){
 		vec2 stars = voronoi(EYEDIR * 25.0).xz;
 		sky_color += smoothstep(0.025 + ((1.0 + sin(TIME + stars.y)) / 2.0) * 0.05, 0.0, stars.x) * stars_intensity;
 	}
+	
+	// Add shooting stars
+	
+	if(shooting_stars_intensity > 0.0){
+		sky_color += getShootingStar(EYEDIR) * shooting_stars_intensity;
+	}
+	
+	// Add astro
+	
+	sky_color = mix(sky_color, astro_color.rgb * astro_intensity * astro_tint, astro_color.a * astro_mask * bottom_mask);
 	
 	// clouds
 	if (AT_HALF_RES_PASS) {

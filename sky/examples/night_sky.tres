@@ -1,6 +1,7 @@
-[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://m80rmki4fbox"]
+[gd_resource type="ShaderMaterial" load_steps=11 format=3 uid="uid://m80rmki4fbox"]
 
 [ext_resource type="Shader" path="res://sky/stylized_sky.gdshader" id="1_kacri"]
+[ext_resource type="Texture2D" uid="uid://dvuwb0yce4sb7" path="res://sky/assets/shooting_star_sampler.png" id="2_gp87k"]
 
 [sub_resource type="Gradient" id="Gradient_hjww8"]
 offsets = PackedFloat32Array(0.58, 0.6)
@@ -39,9 +40,9 @@ noise = SubResource("FastNoiseLite_rs0k1")
 shader = ExtResource("1_kacri")
 shader_parameter/clouds_samples = 32
 shader_parameter/shadow_sample = 4
-shader_parameter/clouds_density = 0.5
+shader_parameter/clouds_density = 0.4
 shader_parameter/clouds_scale = 1.0
-shader_parameter/clouds_smoothness = 0.03
+shader_parameter/clouds_smoothness = 0.05
 shader_parameter/clouds_light_color = Color(0.227451, 0.447059, 1, 1)
 shader_parameter/clouds_shadow_intensity = 8.0
 shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_or465")
@@ -52,6 +53,9 @@ shader_parameter/bottom_color = Color(0.027451, 0.101961, 0.25098, 1)
 shader_parameter/sun_scatter = Color(0.12549, 0.0862745, 0.372549, 1)
 shader_parameter/astro_tint = Color(1, 1, 1, 1)
 shader_parameter/astro_scale = 6.0
-shader_parameter/astro_intensity = 1.6
+shader_parameter/astro_intensity = 1.2
 shader_parameter/astro_sampler = SubResource("GradientTexture2D_vg6u4")
-shader_parameter/stars_intensity = 1.0
+shader_parameter/stars_intensity = 5.0
+shader_parameter/shooting_stars_intensity = 4.0
+shader_parameter/shooting_star_tint = Color(1, 0.662745, 0.419608, 1)
+shader_parameter/shooting_star_sampler = ExtResource("2_gp87k")

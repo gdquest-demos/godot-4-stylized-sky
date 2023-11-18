@@ -35,7 +35,9 @@ uniform float stars_intensity : hint_range(0.0, 5.0, 0.1) = 0.0;
 
 group_uniforms shooting_stars;
 
-uniform float shooting_stars_intensity : hint_range(0.0, 4.0, 0.1) = 0.0;
+uniform float shooting_stars_intensity : hint_range(0.0, 10.0, 0.1) = 0.0;
+uniform sampler2D shooting_star_sampler : filter_linear, repeat_disable;
+uniform vec3 shooting_star_tint : source_color;
 
 float rand(float n){return fract(sin(n) * 43758.5453123);}
 
@@ -139,23 +141,26 @@ float getShootingStar(vec3 eyedir){
 	for(int i = 0; i < 4; i++){
 		float base_rand = rand(float(i));
 		float time = TIME + base_rand * 2.0;
-		float duration = 1.0 + base_rand * 0.25;
+		float duration = 0.5 + base_rand;
 		float seed = floor(time / duration) * duration + base_rand;
 		float progress = mod(time, duration) / duration;
-		float a = rand(seed + 100.0) * 0.8;
+		float rand_value = rand(seed + 100.0);
+		float rand_scale = base_rand * 10.0;
+		float a = rand_value * 0.8;
 		mat3 angle = mat3(vec3(cos(a), -sin(a), 0.0), vec3(sin(a), cos(a), 0.0), vec3(0.0, 0.0, 1.0));
 		vec3 shooting_dir = directionToMatrix(randomDirection(seed)) * angle * eyedir;
-		vec2 shooting_uv = ((shooting_dir.xy + vec2(0.0, progress * 0.4)) * vec2(80.0, 1.0) * 2.0) + vec2(0.5);
+		vec2 shooting_uv = ((shooting_dir.xy + vec2(0.0, progress * 0.4)) * (8.0 + rand_scale)) + vec2(0.5);
 
 		float shooting_mask = ceil(
 			clamp(shooting_uv.x * (1.0 - shooting_uv.x), 0.0, 1.0) *
 			clamp(shooting_uv.y * (1.0 - shooting_uv.y), 0.0, 1.0)
 			) * ceil(shooting_dir.z);
-	
-		float shape = shooting_mask * sin(shooting_uv.x * PI) * sin(shooting_uv.y * PI);
-		float tail = shooting_mask * (1.0 - shooting_uv.y);
-		float tail_progress = clamp((1.0 - shooting_uv.y) - progress, 0.0, 1.0);
-		shooting_star = clamp(shooting_star + (step(0.1, shape) * tail_progress * progress * 4.0), 0.0, 1.0);
+			
+		shooting_star = clamp(
+			shooting_star + texture(shooting_star_sampler, shooting_uv).x
+			* sin(progress * PI)
+			* shooting_mask * rand_value,
+		0.0, 1.0);
 	}
 	return clamp(shooting_star, 0.0, 1.0);
 }
@@ -189,7 +194,7 @@ void sky() {
 	// Add shooting stars
 	
 	if(shooting_stars_intensity > 0.0){
-		sky_color += getShootingStar(EYEDIR) * shooting_stars_intensity;
+		sky_color += getShootingStar(EYEDIR) * shooting_stars_intensity * shooting_star_tint;
 	}
 	
 	// Add astro

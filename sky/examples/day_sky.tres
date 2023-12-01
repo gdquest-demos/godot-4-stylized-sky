@@ -42,7 +42,7 @@ noise = SubResource("FastNoiseLite_nsbgi")
 [resource]
 shader = ExtResource("1_i5n5i")
 shader_parameter/clouds_samples = 32
-shader_parameter/shadow_sample = 3
+shader_parameter/shadow_sample = 4
 shader_parameter/clouds_density = 0.4
 shader_parameter/clouds_scale = 1.0
 shader_parameter/clouds_smoothness = 0.03

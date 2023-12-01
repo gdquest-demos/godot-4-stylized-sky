@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=11 format=3 uid="uid://m80rmki4fbox"]
+[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://m80rmki4fbox"]
 
 [ext_resource type="Shader" path="res://sky/stylized_sky.gdshader" id="1_kacri"]
 [ext_resource type="Texture2D" uid="uid://dvuwb0yce4sb7" path="res://sky/assets/shooting_star_sampler.png" id="2_gp87k"]
@@ -36,6 +36,13 @@ seamless = true
 seamless_blend_skirt = 1.0
 noise = SubResource("FastNoiseLite_rs0k1")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4dufw"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ol2j5"]
+seamless = true
+noise = SubResource("FastNoiseLite_4dufw")
+
 [resource]
 shader = ExtResource("1_kacri")
 shader_parameter/clouds_samples = 32
@@ -59,3 +66,4 @@ shader_parameter/stars_intensity = 5.0
 shader_parameter/shooting_stars_intensity = 4.0
 shader_parameter/shooting_star_tint = Color(1, 0.662745, 0.419608, 1)
 shader_parameter/shooting_star_sampler = ExtResource("2_gp87k")
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_ol2j5")

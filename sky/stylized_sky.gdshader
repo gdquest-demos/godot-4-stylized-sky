@@ -171,7 +171,7 @@ float get_shooting_star(vec3 eyedir){
 void sky() {
 	
 	float horizon_mask = abs(EYEDIR.y);
-	float bottom_mask = smoothstep(0.55, 0.45, SKY_COORDS.y);
+	float bottom_mask = smoothstep(0.5, 0.45, SKY_COORDS.y);
 	
 	vec3 dir = direction_to_matrix(LIGHT0_DIRECTION) * EYEDIR;
 	vec2 astro_uv = (-(dir.xy / dir.z) * astro_scale) + vec2(0.5);
@@ -215,10 +215,10 @@ void sky() {
 	// clouds
 	if (AT_HALF_RES_PASS) {
 		vec3 clouds_direction = vec3(EYEDIR.xz / clamp(EYEDIR.y, 0.0, 1.0), 1.0);
-		vec2 clouds = cloud_ray_march(clouds_direction, LIGHT0_DIRECTION);
+		vec2 clouds = EYEDIR.y > 0.0 ? cloud_ray_march(clouds_direction, LIGHT0_DIRECTION) : vec2(0.0);
 		
 		COLOR = mix(bottom_color, clouds_light_color, exp(-clouds.y * clouds_shadow_intensity));
-		ALPHA = (1.0 - exp(-clouds.x * horizon_mask * 10.0));
+		ALPHA = (1.0 - exp(-clouds.x * horizon_mask * bottom_mask * 10.0));
 		
 	}else{
 		COLOR.rgb = mix(sky_color, HALF_RES_COLOR.rgb, HALF_RES_COLOR.a);

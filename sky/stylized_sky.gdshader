@@ -129,7 +129,7 @@ vec2 cloud_ray_march(vec3 direction, vec3 sun_direction){
 		}
 		light += point_light;
 	}
-	return vec2(density, light / float(shadow_sample * clouds_samples));
+	return vec2(clamp(density, 0.0, 1.0), light / float(shadow_sample * clouds_samples));
 }
 
 vec3 random_direction(float seed){
